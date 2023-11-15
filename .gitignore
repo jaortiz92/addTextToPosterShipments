@@ -1,0 +1,8 @@
+*.xlsx
+*.JPG
+*.png
+*.ttf
+*.zip
+*pycache*
+*.ipynb
+*.log
