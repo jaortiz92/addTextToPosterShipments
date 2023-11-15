@@ -41,7 +41,7 @@ class Guides:
         None
         '''
         self.guides['NOMBRE']: Series = self.guides['CLIENTE'].apply(
-            lambda x: str(x).title().split()[0]
+            lambda x: str(x).title()
         )
 
         self.guides['TRANSPORTADORA']: Series = self.guides['TRANSPORTADORA'].apply(
