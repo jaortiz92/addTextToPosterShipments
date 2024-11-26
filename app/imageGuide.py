@@ -5,14 +5,16 @@ from PIL.ImageFont import FreeTypeFont
 from .constants import Constants
 from .utils import Utils
 
+
 class ImageGuide:
     def __init__(
-            self, name: str, transporter: str, guide: str, date: str
-        ) -> None:
+        self, name: str, transporter: str, guide: str, date: str, line: str
+    ) -> None:
         self.name: str = name
         self.transporter: str = transporter
         self.guide: str = guide
         self.date: str = date
+        self.line: str = line.lower()
         self.open_image()
         self.add_texts()
         Utils.save_image(self.name, self.image)
@@ -29,7 +31,14 @@ class ImageGuide:
             -------
             None
         '''
-        self.image: PngImageFile = Image.open(Constants.IMAGE_PATH)
+        if self.line == Constants.TINTA:
+            image_path: str = Constants.IMAGE_PATH_TINTA
+        elif self.line == Constants.GIVEC:
+            image_path: str = Constants.IMAGE_PATH_GIVEC
+        else:
+            image_path: str = Constants.IMAGE_PATH_KYLY
+
+        self.image: PngImageFile = Image.open(image_path)
         self.draw: ImageDraw.ImageDraw = ImageDraw.Draw(self.image)
 
     def add_texts(self) -> None:
@@ -55,7 +64,7 @@ class ImageGuide:
             Constants.COLOR_NAME
         )
 
-        #Transport
+        # Transport
         self.add_one_text(
             Constants.FONT_TITLE_PATH,
             Constants.FONT_TRANSPORT_PATH,
@@ -66,7 +75,7 @@ class ImageGuide:
             Constants.COLOR_TRANSPORT
         )
 
-        #Guide
+        # Guide
         self.add_one_text(
             Constants.FONT_GUIDE_PATH,
             Constants.FONT_GUIDE_PATH,
@@ -77,7 +86,7 @@ class ImageGuide:
             Constants.COLOR_GUIDE
         )
 
-        #Date
+        # Date
         self.add_one_text(
             Constants.FONT_TITLE_PATH,
             Constants.FONT_DATE_PATH,
@@ -89,10 +98,10 @@ class ImageGuide:
         )
 
     def add_one_text(
-            self, font_path_one: str, font_path_two: str,
-            size: int, text_one: str, text_two: str,
-            y_value: int, color: Tuple[int]
-        ) -> None:
+        self, font_path_one: str, font_path_two: str,
+        size: int, text_one: str, text_two: str,
+        y_value: int, color: Tuple[int]
+    ) -> None:
         '''
             font_path_one: str
                 Path to text one's font
@@ -119,9 +128,9 @@ class ImageGuide:
         '''
 
         font_one: FreeTypeFont = ImageFont.truetype(font_path_one, size)
-        
+
         font_two: FreeTypeFont = ImageFont.truetype(font_path_two, size)
-        
+
         sizes: Tuple[int] = Utils.generate_size(
             text_one, text_two,
             font_one, font_two,

@@ -6,12 +6,11 @@ from .imageGuide import ImageGuide
 from .constants import Constants
 from .utils import Utils
 
+
 class App:
     def __init__(self) -> None:
         self.open_files()
         self.fit()
-        
-
 
     def open_files(self) -> None:
         '''
@@ -48,7 +47,6 @@ class App:
                 self.guides.loc[i, 'TRANSPORTADORA'],
                 self.guides.loc[i, 'GUIA'],
                 self.guides.loc[i, 'FECHA'],
+                self.guides.loc[i, 'LINEA'],
             )
         print('Proceso Completado')
-
-

@@ -3,11 +3,11 @@ from pandas.core.frame import DataFrame
 from pandas.core.series import Series
 from .constants import Constants
 
+
 class Guides:
     def __init__(self) -> None:
         self.open_files()
         self.clean_file()
-
 
     def open_files(self) -> None:
         '''
@@ -24,7 +24,8 @@ class Guides:
         self.guides: DataFrame = pd.read_excel(
             Constants.FILE_TO_WORK,
             dtype={
-                'GUIA': str
+                'GUIA': str,
+                'LINEA': str
             }
         )
 
@@ -40,12 +41,12 @@ class Guides:
         -------
         None
         '''
-        self.guides['NOMBRE']: Series = self.guides['CLIENTE'].apply(
+        self.guides['NOMBRE'] = self.guides['CLIENTE'].apply(
             lambda x: str(x).title()
         )
 
-        self.guides['TRANSPORTADORA']: Series = self.guides['TRANSPORTADORA'].apply(
+        self.guides['TRANSPORTADORA'] = self.guides['TRANSPORTADORA'].apply(
             lambda x: str(x).upper()
         )
 
-        self.guides['FECHA']: Series = self.guides['FECHA'].dt.strftime('%m/%d/%Y')
+        self.guides['FECHA'] = self.guides['FECHA'].dt.strftime('%m/%d/%Y')
